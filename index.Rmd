@@ -9,7 +9,7 @@ output:
 
 <!--html_preserve-->
 <style>
-@import url('https://fonts.googleapis.com/css?family=Caveat&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Caveat|Source+Sans+Pro&display=swap');
 </style>
 <!--/html_preserve-->
 
@@ -20,6 +20,7 @@ library(summarytools)
 library(httr)
 library(DT)
 library(colorspace)
+library(vapoRwave)
 ```
 
 ```{r data}
@@ -71,12 +72,11 @@ wine_cellar %>%
   geom_segment(aes(x = Wine, xend = Wine, y = BeginConsume, yend=EndConsume), color = "grey") +
   geom_point(aes(x = Wine, y = BeginConsume), color = sequential_hcl(5, "Blues 2")[3], size = 3 ) +
   geom_point(aes(x = Wine, y = EndConsume), color = sequential_hcl(5, "Blues 2")[1], size = 3 ) +
-  theme_minimal() +
+  theme_minimal(base_family = 'Avenir') +
   theme(axis.text.y = element_text(size = 14)) +
   coord_flip() +
   geom_hline(yintercept = 2019) +
-  xlab("") +
-  ylab("Consume between")
+  labs(x = "", y = "Consume between")
 ```
 
 Column {data-width=400}
@@ -89,10 +89,13 @@ Column {data-width=400}
 wine_cellar %>% 
   mutate(MasterVarietal = fct_rev(fct_infreq(MasterVarietal))) %>%
   ggplot(aes(x = MasterVarietal)) +
-  geom_bar(fill = sequential_hcl(1, "Blues 2")) +
+  #geom_bar(fill = sequential_hcl(1, "Blues 2")) +
+  geom_bar(fill = vapoRwave:::jazzCup_palette[3]) +
   coord_flip() +
-  theme_minimal() +
-  scale_y_continuous(expand = c(0, 0))
+  theme_minimal(base_family = 'Avenir') +
+  theme(panel.grid.major.y = element_blank()) +
+  scale_y_continuous(expand = c(0, 0), breaks = c(1,5,10,15,20)) +
+  labs(x = "", y = "Wines")
 ```   
     
 ### Region
@@ -102,16 +105,19 @@ wine_cellar %>%
 wine_cellar %>% 
   mutate(RegionCountry = fct_rev(fct_infreq(RegionCountry))) %>%
   ggplot(aes(x = RegionCountry)) +
-  geom_bar(fill = sequential_hcl(1, "Blues 2")) +
+  #geom_bar(fill = sequential_hcl(1, "Blues 2")) +
+  geom_bar(fill = vapoRwave:::jazzCup_palette[3]) +
   coord_flip() +
-  theme_minimal() +
-  scale_y_continuous(expand = c(0, 0))
+  theme_minimal(base_family = 'Avenir') +
+  theme(panel.grid.major.y = element_blank()) +
+  scale_y_continuous(expand = c(0, 0), breaks = c(1,5,10,15,20)) +
+  labs(x = "", y = "Wines")
 ```
 
 Availability {data-orientation=rows}
 =======================================================================
 
-Row {data-height=350}
+Row {data-height=200}
 -----------------------------------------------------------------------
    
 ### Next 5
@@ -122,9 +128,13 @@ availability %>%
   arrange(desc(Available)) %>% 
   slice(1:5) %>% 
   select(Available, Wine, Vintage, MasterVarietal, Producer, Country, Region, CScore, ComBegin, ComEnd) %>% 
+  mutate(Available = round(Available, digits = 3)) %>% 
   knitr::kable()
 ```   
     
+Row
+-----------------------------------------------------------------------
+
 ### Unreported Availability
 
 ```{r}
@@ -144,5 +154,5 @@ Row {data-height=650}
 ### Complete List
 
 ```{r}
-wine_cellar %>% datatable()
+wine_cellar %>% datatable(class = 'compact row-border nowrap', options = list(pageLength = 20))
 ```
