@@ -51,10 +51,14 @@ Sidebar {.sidebar}
 
 <br />
 
-#### What do you want tonight?
+#### A personal wine cellar report
+I collect wine on a very casual and occasional basis, and this site keeps track of what's in my cellar. I use CellarTracker.com as my actual tracker and use their API to import data here. While CellarTracker does make some reports available, I wanted something more tailored and now we're here.  
 
-These are the data on my personal cellar, as tracker in CellarTracker.com. 
+If you enjoy wine, I highly recommend checking out [CellarTracker](https://www.cellartracker.com/). Their mobile app uses Vivino and makes it easy to add wines to your list. 
 
+You can find out more about me at personal site, [samuelcrane.com](https://www.samuelcrane.com/).
+
+<div class="signature">Samuel</div>
 
 Wines 
 =======================================================================

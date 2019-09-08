@@ -132,3 +132,11 @@ fieldset[disabled] .navbar-inverse .btn-link:hover,
 fieldset[disabled] .navbar-inverse .btn-link:focus {
   color: #ffffff;
 }
+
+.signature {
+  text-align: right;
+  font-family: 'Caveat', 'Source Sans Pro', Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  padding: 14.5px 15px;
+  color: #666;
+}
