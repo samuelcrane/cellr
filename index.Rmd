@@ -79,7 +79,7 @@ wine_cellar %>%
   theme_minimal(base_family = 'Avenir') +
   theme(axis.text.y = element_text(size = 14)) +
   coord_flip() +
-  geom_hline(yintercept = 2019) +
+  geom_hline(yintercept = 2020) +
   labs(x = "", y = "Consume between")
 ```
 
