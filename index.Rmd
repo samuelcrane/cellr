@@ -21,6 +21,7 @@ library(httr)
 library(DT)
 library(colorspace)
 library(vapoRwave)
+library(plotly)
 ```
 
 ```{r data}
@@ -52,9 +53,9 @@ Sidebar {.sidebar}
 <br />
 
 #### A personal wine cellar report
-I collect wine on a very casual and occasional basis, and this site keeps track of what's in my cellar. I use CellarTracker.com as my actual tracker and use their API to import data here. While CellarTracker does make some reports available, I wanted something more tailored and now we're here.  
+I collect wine on a very casual, almost accidental, basis. Casual in that I buy wine for drinking not for investing; accidental in that sometimes forget what I have stored away. I've made this website as a way for me to get a handle on the latter issue in service of the former. 
 
-If you enjoy wine, I highly recommend checking out [CellarTracker](https://www.cellartracker.com/). Their mobile app uses Vivino and makes it easy to add wines to your list. 
+I use [CellarTracker](https://www.cellartracker.com/) and their mobile app to manage the inventory. All the code to pull the data from the CellarTracker website, make the tables and charts, and build this site use the R programming language, and you can inspect the code in this [GitHub repo](https://github.com/samuelcrane/cellr). 
 
 You can find out more about me at personal site, [samuelcrane.com](https://www.samuelcrane.com/).
 
@@ -71,16 +72,18 @@ Column {data-width=600}
 ```{r fig.height=12, fig.width=12}
 # Consume Range
 wine_cellar %>% 
+  filter(!is.na(EndConsume)) %>% 
   mutate(Wine = fct_rev(fct_reorder(Wine, EndConsume))) %>%
   ggplot() +
   geom_segment(aes(x = Wine, xend = Wine, y = BeginConsume, yend=EndConsume), color = "grey") +
-  geom_point(aes(x = Wine, y = BeginConsume), color = sequential_hcl(5, "Blues 2")[3], size = 3 ) +
-  geom_point(aes(x = Wine, y = EndConsume), color = sequential_hcl(5, "Blues 2")[1], size = 3 ) +
+  geom_point(aes(x = Wine, y = BeginConsume), color = sequential_hcl(5, "Blues 2")[3], size = 2 ) +
+  geom_point(aes(x = Wine, y = EndConsume), color = sequential_hcl(5, "Blues 2")[1], size = 2 ) +
   theme_minimal(base_family = 'Avenir') +
-  theme(axis.text.y = element_text(size = 14)) +
+  theme(axis.text.y = element_text(size = 10)) +
   coord_flip() +
-  geom_hline(yintercept = 2020) +
+  #geom_hline(yintercept = 2020) +
   labs(x = "", y = "Consume between")
+ggplotly()
 ```
 
 Column {data-width=400}
